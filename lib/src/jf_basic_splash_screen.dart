@@ -1,7 +1,7 @@
-import 'package:animation_package/animation_package.dart';
-import 'package:animation_package/src/controller/networkcontroller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jf_animated_splash/jf_animated_splash.dart';
+import 'package:jf_animated_splash/src/controller/networkcontroller.dart';
 
 import 'app_description_widget.dart';
 import 'app_name_widget.dart';

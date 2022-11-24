@@ -1,5 +1,5 @@
-import 'package:animation_package/animation_package.dart';
 import 'package:flutter/material.dart';
+import 'package:jf_animated_splash/jf_animated_splash.dart';
 
 void main() {
   runApp(const MyApp());

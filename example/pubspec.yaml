@@ -13,7 +13,7 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
-  animation_package:
+  jf_animated_splash:
     path: ../
 
 dev_dependencies:

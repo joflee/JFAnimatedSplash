@@ -23,8 +23,7 @@ class JfBasicSplashScreen extends StatefulWidget {
     this.logoStopDuration,
     this.logoFadeDuration,
     this.transitionDuration,
-    this.initFunctions,
-    required this.navigationScreen,
+    required this.navigationFunction,
     this.requiredInternet,
   }) : bottomWidget = null;
 
@@ -42,8 +41,7 @@ class JfBasicSplashScreen extends StatefulWidget {
     this.logoStopDuration,
     this.logoFadeDuration,
     this.transitionDuration,
-    this.initFunctions,
-    required this.navigationScreen,
+    required this.navigationFunction,
     this.requiredInternet,
   })  : title3 = null,
         title4 = null,
@@ -92,11 +90,8 @@ class JfBasicSplashScreen extends StatefulWidget {
 
   /// If your App is having any intial Network calls or other processes,
   /// You can put it here so loading animation is show accornding to it &
-  /// then navigate to the next screen which provided in the [navigationScreen]
-  final Iterable<Future>? initFunctions;
-
-  /// Add the Screen where you want to navigate after the spalsh Screen
-  final Widget navigationScreen;
+  /// then navigate to the next screen
+  final Function navigationFunction;
 
   @override
   JfBasicSplashScreenState createState() => JfBasicSplashScreenState();
@@ -124,14 +119,8 @@ class JfBasicSplashScreenState extends State<JfBasicSplashScreen>
       if (kNetworkController.connectionStatus.value != 0 && isVersionCheck) {
         isVersionCheck = false;
         if (!allAnimationDone) {
-          Future.delayed(const Duration(seconds: 1), () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => widget.navigationScreen,
-              ),
-            );
-          });
+          await Future.delayed(const Duration(seconds: 1));
+          widget.navigationFunction();
         }
       } else if (kNetworkController.connectionStatus.value == 0) {
         isVersionCheck = true;
@@ -156,31 +145,11 @@ class JfBasicSplashScreenState extends State<JfBasicSplashScreen>
           setState(() {
             allAnimationDone = !allAnimationDone;
           });
-          widget.initFunctions != null
-              ? kNetworkController.connectionStatus.value != 0
-                  ? Future.wait(widget.initFunctions ?? []).then(
-                      (value) => Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => widget.navigationScreen,
-                        ),
-                        (route) => false,
-                      ),
-                    )
-                  : () {}
-              : kNetworkController.internetConnection.value ==
-                          widget.requiredInternet ||
-                      kNetworkController.connectionStatus.value != 0
-                  ? Future.delayed(const Duration(seconds: 1), () {
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => widget.navigationScreen,
-                        ),
-                        (route) => false,
-                      );
-                    })
-                  : () {};
+          kNetworkController.internetConnection.value ==
+                      widget.requiredInternet ||
+                  kNetworkController.connectionStatus.value != 0
+              ? widget.navigationFunction()
+              : () {};
         });
       });
     });

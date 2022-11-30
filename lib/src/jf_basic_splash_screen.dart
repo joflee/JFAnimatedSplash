@@ -25,6 +25,7 @@ class JfBasicSplashScreen extends StatefulWidget {
     this.transitionDuration,
     required this.navigationFunction,
     this.requiredInternet,
+    this.middleWidget,
   }) : bottomWidget = null;
 
   const JfBasicSplashScreen.customBottom({
@@ -43,6 +44,7 @@ class JfBasicSplashScreen extends StatefulWidget {
     this.transitionDuration,
     required this.navigationFunction,
     this.requiredInternet,
+    this.middleWidget,
   })  : title3 = null,
         title4 = null,
         title5 = null;
@@ -72,6 +74,9 @@ class JfBasicSplashScreen extends StatefulWidget {
 
   /// Add the text widget to show the  Country of origin
   final Text? title5;
+
+  /// Add middle widget that is show above the loader
+  final Widget? middleWidget;
 
   /// Add bottom widget like your company name, country of origin, app version etc.
   final Widget? bottomWidget;
@@ -245,6 +250,12 @@ class JfBasicSplashScreenState extends State<JfBasicSplashScreen>
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
+                            if (widget.middleWidget != null) ...[
+                              widget.middleWidget ?? const SizedBox(),
+                              const SizedBox(
+                                height: 18,
+                              )
+                            ],
                             Obx(
                               () => AnimatedOpacity(
                                 duration: widget.transitionDuration ??
@@ -330,8 +341,8 @@ class JfBasicSplashScreenState extends State<JfBasicSplashScreen>
                             BasicInfoDetailWidget(
                               bottomWidget: widget.bottomWidget,
                               version: widget.title3,
-                              companyName: widget.title4,
-                              appOrigin: widget.title5,
+                              companyName: widget.title5,
+                              appOrigin: widget.title4,
                             ),
                             const SizedBox(
                               height: 5,

@@ -1,14 +1,16 @@
 import 'dart:async';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+
 import '../listener/ConnectivityInterface.dart';
 
 class NetworkController extends GetxController {
   var connectionStatus = 0.obs;
   RxBool internetConnection = false.obs;
   final Connectivity connectivity = Connectivity();
-  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+  late StreamSubscription<List<ConnectivityResult>> _connectivitySubscription;
   late ConnectivityResult result;
   ConnectivityInterFace? connectivityInterFace;
 
@@ -23,16 +25,17 @@ class NetworkController extends GetxController {
   }
 
   Future<void> initconnectivity() async {
-    late ConnectivityResult result;
+    late List<ConnectivityResult> result;
     try {
       result = await connectivity.checkConnectivity();
       // ignore: empty_catches
     } on PlatformException {}
-    return _updateConnectionStatus(result);
+    _updateConnectionStatus(result);
   }
 
-  Future<void> _updateConnectionStatus(ConnectivityResult result) async {
-    switch (result) {
+  Future<List<ConnectivityResult>> _updateConnectionStatus(
+      List<ConnectivityResult> result) async {
+    switch (result.first) {
       case ConnectivityResult.wifi:
         connectionStatus.value = 1;
         break;
@@ -48,6 +51,7 @@ class NetworkController extends GetxController {
     if (connectivityInterFace != null) {
       connectivityInterFace!.onConnection();
     }
+    return result;
   }
 
   @override

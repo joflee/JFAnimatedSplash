@@ -4,19 +4,19 @@ version: 0.0.1
 homepage:
 
 environment:
-  sdk: ">=2.18.4 <3.0.0"
+  sdk: ">=3.2.6 <4.0.0"
   flutter: ">=1.17.0"
 
 dependencies:
-  connectivity_plus: ^3.0.2
+  connectivity_plus: 6.0.3
   flutter:
     sdk: flutter
-  get: ^4.6.5
+  get: 4.6.6
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  flutter_lints: 3.0.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

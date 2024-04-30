@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(context) {
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Joflee Splash',
         theme: ThemeData(
           primarySwatch: Colors.blue,

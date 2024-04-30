@@ -173,6 +173,7 @@ class JfBasicSplashScreenState extends State<JfBasicSplashScreen>
         : MediaQuery.of(context).size.width / 3;
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: widget.backgroundColor,
         body: Center(
